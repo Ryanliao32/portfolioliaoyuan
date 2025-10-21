@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>廖原 - 个人作品集</title>
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --light-text: #666;
+            --border-color: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: #f5f7fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a73e8, #6c8ef5);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Trip.com Group logo背景 - 加深水印 */
+        .trip-logo-bg {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.25; /* 从0.1增加到0.25，加深水印 */
+            font-size: 100px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.4); /* 增加白色不透明度 */
+            z-index: 0;
+            white-space: nowrap;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        section {
+            background: white;
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 600;
+        }
+        
+        .category {
+            margin-bottom: 50px;
+            padding: 25px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            position: relative;
+        }
+        
+        /* 为不同类别添加不同的左侧边框颜色 */
+        .category-daren {
+            border-left: 5px solid #FF6B6B;
+        }
+        
+        .category-creative {
+            border-left: 5px solid #4ECDC4;
+        }
+        
+        .category-hot {
+            border-left: 5px solid #45B7D1;
+        }
+        
+        .category-life {
+            border-left: 5px solid #FFA07A;
+        }
+        
+        .category h3 {
+            margin-bottom: 20px;
+            color: var(--text-color);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 为每个类别添加小图标 */
+        .category-daren h3::before {
+            content: "👥";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .category-creative h3::before {
+            content: "💡";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .category-hot h3::before {
+            content: "🔥";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .category-life h3::before {
+            content: "📚";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .project-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 竖屏封面样式 */
+        .project-thumbnail {
+            height: 360px; /* 竖屏高度 */
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-text);
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .project-info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+        
+        /* 调整账号名称样式 - 减小字号和降低突出度 */
+        .project-info h5 {
+            margin-bottom: 8px;
+            font-size: 0.95rem; /* 从1.1rem减小到0.95rem */
+            color: #777; /* 使用更浅的颜色 */
+            font-weight: 500; /* 从默认粗体改为中等粗细 */
+        }
+        
+        /* 突出视频介绍文字 */
+        .project-info p {
+            margin-bottom: 15px;
+            color: #333; /* 使用更深的颜色 */
+            font-size: 1rem; /* 保持原有大小或稍大 */
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+        
+        .project-link-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: auto;
+        }
+        
+        .project-link {
+            display: inline-block;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .project-link:hover {
+            background-color: #f0f7ff;
+            text-decoration: underline;
+        }
+        
+        .resume-section {
+            text-align: center;
+        }
+        
+        .resume-link {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .resume-link:hover {
+            background-color: #0d5bb9;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            color: var(--light-text);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .trip-logo-bg {
+                font-size: 60px;
+                right: 0;
+            }
+            
+            .project-thumbnail {
+                height: 280px;
+            }
+            
+            .category {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="trip-logo-bg">Trip.com Group</div>
+        <div class="container">
+            <div class="header-content">
+                <h1>廖原</h1>
+                <p>品牌策划 | 内容运营 | 营销增长运营</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <span>liaoyuan993@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📱</span>
+                        <span>18612944610</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="portfolio-section">
+            <h2>作品汇总</h2>
+            
+            <div class="category category-daren">
+                <h3>达人投放类：联合品质生活、亲子等垂类达人，建设"携程口碑试睡师"联盟</h3>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-thumbnail">
+                            <img src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813c001/osGpAIFjQIh0TII0fe2zDGACgfNa5AluAeAALa~tplv-dy-cropcenter:323:430.jpeg?biz_tag=pcweb_cover&amp;from=327834062&amp;lk3s=138a59ce&amp;s=PackSourceEnum_PUBLISH&amp;sc=cover&amp;se=true&amp;sh=323_430&amp;x-expires=2076397200&amp;x-signature=MrPEN8KEA0PT87qgw7K6dm0hjV4%3D" alt="@池早是我">
+                        </div>
+                        <div class="project-info">
+                            <h5>@池早是我</h5>
+                            <p>借助达人100种职业体验挑战话题热度，传递携程产品品质放心可检验的品牌心智</p>
+                            <div class="project-link-container">
+                                <a href="https://v.douyin.com/sckFgZzhNB4/" class="project-link" target="_blank">点击查看 ＞</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-thumbnail">
+                            <img src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813c000-ce/o43nfnACfAESApDqAOGVzMQwhF9ovSTANeEIEE~tplv-dy-cropcenter:323:430.jpeg?biz_tag=pcweb_cover&amp;from=327834062&amp;lk3s=138a59ce&amp;s=PackSourceEnum_PUBLISH&amp;sc=cover&amp;se=true&amp;sh=323_430&amp;x-expires=2076397200&amp;x-signature=Fb3LNoTkEGxX%2Bk4n7xFRMACE3NM%3D" alt="@陶一航Steven">
+                        </div>
+                        <div class="project-info">
+                            <h5>@陶一航Steven</h5>
+                            <p>策划500元VS10000元泰国酒店盲盒，以抓人眼球的话题辅助用户的春节出行决策</p>
+                            <div class="project-link-container">
+                                <a href="https://v.douyin.com/JYKK8F744Fk/" class="project-link" target="_blank">点击查看 ＞</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category category-creative">
+                <h3>创意营销类：通过创意内容传递活动心智，增强用户决策转化</h3>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-thumbnail">
+                            <img src="https://p3-pc-sign.douyinpic.com/tos-cn-i-dy/73a3bcc13f7e41e19eaf7dbff5625b60~tplv-dy-cropcenter:323:430.jpeg?biz_tag=pcweb_cover&amp;from=327834062&amp;lk3s=138a59ce&amp;s=PackSourceEnum_PUBLISH&amp;sc=cover&amp;se=true&amp;sh=323_430&amp;x-expires=2076397200&amp;x-signature=8L7gqVz0AIMsJsmtol9xSrWGZwM%3D" alt="@携程旅行网">
+                        </div>
+                        <div class="project-info">
+                            <h5>@携程旅行网</h5>
+                            <p>策划"办公室揭秘系列"内容，以旅游大厂员工视角揭秘爆款好货背后员工们的相爱相杀</p>
+                            <div class="project-link-container">
+                                <a href="https://v.douyin.com/j72LwGLYnwU/" class="project-link" target="_blank">点击查看 ＞</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-thumbnail">
+                            <img src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813c000-ce/oYAEhNneA09GEUgAFNACaEIDIwgeiAJE2QfD17~tplv-dy-cropcenter:323:430.jpeg?biz_tag=pcweb_cover&amp;from=327834062&amp;lk3s=138a59ce&amp;s=PackSourceEnum_PUBLISH&amp;sc=cover&amp;se=true&amp;sh=323_430&amp;x-expires=2076397200&amp;x-signature=iKRsk93HRUVo850mZ5oIvPYG6II%3D" alt="@携程口碑榜">
+                        </div>
+                        <div class="project-info">
+                            <h5>@携程口碑榜</h5>
+                            <p>策划"人生照片集"系列内容，通过真人体验的氛围感混剪，传递携程民宿产品的真实可靠</p>
+                            <div class="project-link-container">
+                                <a href="https://v.douyin.com/FPzkssJFNrQ/" class="project-link" target="_blank">点击查看 ＞</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category category-hot">
+                <h3>热点运营类：结合AI能力生产提效，高效收割爆发流量</h3>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-thumbnail">
+                            <img src="https://p3-pc-sign.douyinpic.com/tos-cn-i-dy/767f6f82d26043d6a6a498726e6b8910~tplv-dy-cropcenter:323:430.jpeg?biz_tag=pcweb_cover&amp;from=327834062&amp;lk3s=138a59ce&amp;s=PackSourceEnum_PUBLISH&amp;sc=cover&amp;se=true&amp;sh=323_430&amp;x-expires=2076397200&amp;x-signature=%2Fypzdhm4acCX8O%2BHbjjSpEJ6Hys%3D" alt="@旅游情报站TN">
+                        </div>
+                        <div class="project-info">
+                            <h5>@旅游情报站TN</h5>
+                            <p>针对突发旅游热点，开发AI图转视频和自动化剪辑能力，实现爆发流量的精准收割</p>
+                            <div class="project-link-container">
+                                <a href="https://v.douyin.com/HAilbhuHMS4/" class="project-link" target="_blank">点击查看 ＞</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-thumbnail">
+                            <img src="https://p3-pc-sign.douyinpic.com/tos-cn-i-dy/37063c0d1bcc4e43a30ac08f881056c8~tplv-dy-cropcenter:323:430.jpeg?biz_tag=pcweb_cover&amp;from=327834062&amp;lk3s=138a59ce&amp;s=PackSourceEnum_PUBLISH&amp;sc=cover&amp;se=true&amp;sh=323_430&amp;x-expires=2076397200&amp;x-signature=fm9c%2FmWngwHFj0Be4gB6QOBnuBY%3D" alt="@旅游情报站TN">
+                        </div>
+                        <div class="project-info">
+                            <h5>@旅游情报站TN</h5>
+                            <p>通过对爆款内容做逆向拆解，从0-1搭建内容生产工作流，完成对热点内容的快速批量化响应</p>
+                            <div class="project-link-container">
+                                <a href="https://v.douyin.com/3cLWBkSHtXM/" class="project-link" target="_blank">点击查看 ＞</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category category-life">
+                <h3>生活科普类：优质科普内容商业化拓展</h3>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-thumbnail">
+                            <img src="https://i0.hdslb.com/bfs/archive/78cbaa11ed35c17621dda415371ab243a40e8092.jpg@672w_378h_1c_!web-search-common-cover.avif" alt="@万能编辑部">
+                        </div>
+                        <div class="project-info">
+                            <h5>@万能编辑部</h5>
+                            <p>作为导演完成泛生活科普选题的策划、脚本与制作，并拓展优质内容的商业化价值</p>
+                            <div class="project-link-container">
+                                <a href="https://www.bilibili.com/video/BV1to4y1w7qD/?spm_id_from=333.1387.upload.video_card.click" class="project-link" target="_blank">点击查看 ＞</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-thumbnail">
+                            <img src="https://i0.hdslb.com/bfs/archive/3d05ae0634c1ccad2dead1b8bdf7523486de0f92.jpg@672w_378h_1c.avif" alt="@万能编辑部">
+                        </div>
+                        <div class="project-info">
+                            <h5>@万能编辑部</h5>
+                            <p>与阿里达摩院合作，以生活化视角切入阿尔茨海默症话题，为阿症早筛小程序实现流量曝光</p>
+                            <div class="project-link-container">
+                                <a href="https://www.bilibili.com/video/BV1T84y187an/?spm_id_from=333.1387.upload.video_card.click" class="project-link" target="_blank">点击查看 ＞</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="resume-section">
+            <h2>个人简历</h2>
+            <p>查看完整工作经历、教育背景和专业技能</p>
+            <a href="https://drive.google.com/file/d/11E3FkG22az7TWuWcS9DIyacaTHygBeD1/view?usp=drive_link" class="resume-link" target="_blank">下载简历 (PDF)</a>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>© 2025 廖原 - 个人作品集</p>
+        </div>
+    </footer>
+</body>
+</html>
